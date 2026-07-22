@@ -1023,14 +1023,14 @@
     }
 
     .closing-panel {
-      min-height: 760px;
+      min-height: 440px;
       border-radius: 38px;
       background: var(--blue);
       color: var(--white);
-      padding: clamp(38px, 7vw, 78px);
+      padding: clamp(46px, 7vw, 78px);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       position: relative;
       overflow: hidden;
       box-shadow: 0 34px 100px rgba(0,97,176,.22);
@@ -1070,11 +1070,28 @@
     }
 
     .closing h2 { max-width: 900px; position: relative; z-index: 1; }
+
+    .closing-panel .chapter-index {
+      color: rgba(255,255,255,.64);
+    }
+
+    .closing-next {
+      max-width: 820px;
+    }
+
+    .closing-next h2 {
+      margin-top: 18px;
+    }
+
+    .closing-next p {
+      margin-top: 20px;
+    }
     .closing-bottom {
+      width: 100%;
       display: flex;
       justify-content: space-between;
-      gap: 40px;
-      align-items: end;
+      gap: 48px;
+      align-items: flex-end;
       position: relative;
       z-index: 1;
     }
@@ -1091,69 +1108,6 @@
     .signature span { color: rgba(255,255,255,.62); font-size: 14px; }
 
 
-
-    .investment-lockup .chapter-index {
-      color: rgba(255,255,255,.64);
-    }
-
-    .investment-lockup {
-      position: relative;
-      z-index: 1;
-      max-width: 940px;
-    }
-
-    .investment-amount {
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .investment-amount > span {
-      font-size: clamp(78px, 12vw, 164px);
-      line-height: .84;
-      letter-spacing: -.065em;
-      font-weight: 790;
-    }
-
-    .investment-amount small {
-      margin-top: 18px;
-      color: rgba(255,255,255,.7);
-      font-size: clamp(16px, 2vw, 22px);
-      font-weight: 600;
-    }
-
-    .investment-copy {
-      max-width: 820px;
-      margin: 34px 0 0;
-      color: rgba(255,255,255,.72);
-      font-size: 18px;
-    }
-
-    .closing-divider {
-      height: 1px;
-      margin: 62px 0 44px;
-      background: rgba(255,255,255,.22);
-      position: relative;
-      z-index: 1;
-    }
-
-    .closing-next {
-      max-width: 850px;
-    }
-
-    .closing-next h2 {
-      margin-top: 18px;
-      font-size: clamp(38px, 5vw, 68px);
-    }
-
-    .closing-next p {
-      margin-top: 18px;
-    }
-
-    html[dir="rtl"] .investment-amount > span {
-      letter-spacing: 0;
-    }
 
     footer {
       padding: 22px 0 40px;
@@ -1240,8 +1194,7 @@
       }
       .engagement-card { min-height: 500px; }
       .boundary { padding: 32px 24px; }
-      .investment-amount > span { font-size: clamp(70px, 22vw, 108px); }
-      .closing-divider { margin: 46px 0 36px; }
+      .closing-panel { min-height: auto; }
       .closing-bottom { flex-direction: column; align-items: flex-start; }
       .signature { text-align: start; }
       [dir="rtl"] .signature { text-align: right; }
@@ -1275,7 +1228,6 @@
         <a href="#value" data-en="Value" data-ar="القيمة">Value</a>
         <a href="#scope" data-en="Scope" data-ar="النطاق">Scope</a>
         <a href="#engagement" data-en="Engagement" data-ar="التعاون">Engagement</a>
-        <a href="#investment" data-en="Investment" data-ar="الاستثمار">Investment</a>
       </nav>
 
       <div class="lang-switch" aria-label="Language switcher">
@@ -1746,31 +1698,10 @@
       </div>
     </section>
 
-    <section class="closing" id="investment">
+    <section class="closing" id="next-step">
       <div class="shell">
         <div class="closing-panel reveal">
-          <div class="investment-lockup">
-            <div class="chapter-index" data-en="07 · Project investment" data-ar="07 · قيمة الاستثمار">
-              07 · Project investment
-            </div>
-
-            <div class="investment-amount">
-              <span>25,000</span>
-              <small data-en="QAR fixed project fee" data-ar="ريال قطري، قيمة ثابتة للمشروع">
-                QAR fixed project fee
-              </small>
-            </div>
-
-            <p class="investment-copy"
-               data-en="This investment covers the complete visual transformation, reusable design system, procurement-focused UI language, production-ready Figma delivery, handoff and focused design QA support, with delivery targeted by 30 September 2026."
-               data-ar="تشمل هذه القيمة التحول البصري المتكامل ونظام التصميم القابل لإعادة الاستخدام ولغة واجهة مخصصة للمشتريات وملفات فيغما الجاهزة للتطوير والتسليم ودعماً مركّزاً لضمان جودة التنفيذ، مع استهداف التسليم بحلول 30 سبتمبر 2026.">
-              This investment covers the complete visual transformation, reusable design system, procurement-focused UI language, production-ready Figma delivery, handoff and focused design QA support, with delivery targeted by 30 September 2026.
-            </p>
-          </div>
-
-          <div class="closing-divider"></div>
-
-          <div class="closing-bottom">
+<div class="closing-bottom">
             <div class="closing-next">
               <div class="chapter-index" data-en="Next step" data-ar="الخطوة التالية">Next step</div>
               <h2 data-en="Confirm the scope, then move directly into delivery."
