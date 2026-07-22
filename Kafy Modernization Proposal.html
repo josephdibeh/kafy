@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="KAFY Product Modernization Proposal" />
+  <title>KAFY Product Modernization Proposal</title>
+  <style>
+    :root {
+      --bg: #f4f5f2;
+      --surface: rgba(255,255,255,.82);
+      --surface-solid: #ffffff;
+      --text: #171916;
+      --muted: #6c716b;
+      --line: rgba(23,25,22,.11);
+      --accent: #263c2f;
+      --accent-soft: #e8eee9;
+      --shadow: 0 18px 50px rgba(28, 34, 28, .08);
+      --radius-lg: 30px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --content: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(54, 91, 67, .09), transparent 28%),
+        radial-gradient(circle at 10% 30%, rgba(255,255,255,.9), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(244,245,242,.76);
+      border-bottom: 1px solid rgba(23,25,22,.07);
+    }
+
+    .topbar-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 760;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--accent);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.16);
+    }
+
+    .lang-switch {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.8);
+      color: var(--text);
+      padding: 8px;
+      border-radius: 999px;
+      display: flex;
+      gap: 4px;
+      box-shadow: 0 8px 24px rgba(20,20,20,.04);
+    }
+
+    .lang-switch button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 8px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: .2s ease;
+      font-weight: 650;
+    }
+
+    .lang-switch button.active {
+      color: white;
+      background: var(--accent);
+    }
+
+    main { padding: 72px 0 64px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.22fr .78fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-main,
+    .commercial-card,
+    .section-card,
+    .closing-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-main {
+      border-radius: var(--radius-lg);
+      padding: clamp(34px, 6vw, 72px);
+      position: relative;
+      overflow: hidden;
+      min-height: 580px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      right: -90px;
+      top: -90px;
+      background: radial-gradient(circle, rgba(38,60,47,.13), transparent 65%);
+      pointer-events: none;
+    }
+
+    [dir="rtl"] .hero-main::after {
+      right: auto;
+      left: -90px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: .02em;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(46px, 7vw, 82px);
+      line-height: .98;
+      letter-spacing: -.06em;
+      margin: 32px 0 24px;
+      max-width: 900px;
+    }
+
+    [dir="rtl"] h1 {
+      letter-spacing: -.035em;
+      line-height: 1.08;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      font-size: clamp(18px, 2vw, 22px);
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .hero-note {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: end;
+    }
+
+    .hero-note strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    .hero-note span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .commercial-card {
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .commercial-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 55%);
+      pointer-events: none;
+    }
+
+    .commercial-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      opacity: .68;
+    }
+
+    [dir="rtl"] .commercial-label {
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .price {
+      font-size: clamp(52px, 7vw, 82px);
+      line-height: 1;
+      letter-spacing: -.06em;
+      font-weight: 790;
+      margin: 30px 0 8px;
+    }
+
+    .currency {
+      font-size: 18px;
+      opacity: .72;
+      font-weight: 650;
+    }
+
+    .commercial-meta {
+      margin-top: 52px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .meta-row {
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.18);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: baseline;
+    }
+
+    .meta-row span:first-child { opacity: .65; }
+    .meta-row span:last-child { font-weight: 700; text-align: end; }
+
+    .section {
+      margin-top: 28px;
+    }
+
+    .section-card {
+      border-radius: var(--radius-lg);
+      padding: clamp(30px, 5vw, 54px);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: .36fr .64fr;
+      gap: 42px;
+      margin-bottom: 38px;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      font-weight: 760;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      padding-top: 6px;
+    }
+
+    [dir="rtl"] .section-kicker {
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.08;
+      letter-spacing: -.045em;
+      margin: 0;
+      max-width: 760px;
+    }
+
+    [dir="rtl"] h2 { letter-spacing: -.025em; }
+
+    .lead {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 760px;
+    }
+
+    .insight-grid,
+    .scope-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .insight-grid { grid-template-columns: repeat(3, 1fr); }
+    .scope-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .insight,
+    .scope-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,.58);
+      padding: 24px;
+    }
+
+    .insight-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-weight: 780;
+      margin-bottom: 24px;
+    }
+
+    .insight h3,
+    .scope-item h3 {
+      margin: 0 0 9px;
+      font-size: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .insight p,
+    .scope-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .scope-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .check {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      font-size: 14px;
+    }
+
+    .boundary {
+      background: linear-gradient(135deg, rgba(38,60,47,.055), rgba(255,255,255,.65));
+    }
+
+    .boundary-box {
+      border-left: 3px solid var(--accent);
+      padding: 4px 0 4px 24px;
+      max-width: 880px;
+      font-size: 19px;
+      color: var(--text);
+    }
+
+    [dir="rtl"] .boundary-box {
+      border-left: 0;
+      border-right: 3px solid var(--accent);
+      padding: 4px 24px 4px 0;
+    }
+
+    .closing-card {
+      border-radius: var(--radius-lg);
+      padding: clamp(34px, 6vw, 64px);
+      background: var(--surface-solid);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: end;
+    }
+
+    .closing-card p {
+      margin: 15px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 700px;
+    }
+
+    .signature {
+      min-width: 210px;
+      text-align: end;
+    }
+
+    .signature strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .signature span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer {
+      padding: 26px 0 40px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .fade {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: reveal .65s ease forwards;
+    }
+
+    .fade:nth-child(2) { animation-delay: .08s; }
+    .fade:nth-child(3) { animation-delay: .16s; }
+    .fade:nth-child(4) { animation-delay: .24s; }
+
+    @keyframes reveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 860px) {
+      main { padding-top: 28px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-main { min-height: auto; }
+      .commercial-card { min-height: 420px; }
+      .section-heading { grid-template-columns: 1fr; gap: 12px; }
+      .insight-grid { grid-template-columns: 1fr; }
+      .scope-grid { grid-template-columns: 1fr; }
+      .closing-card { grid-template-columns: 1fr; }
+      .signature { text-align: start; }
+      [dir="rtl"] .signature { text-align: right; }
+    }
+
+    @media (max-width: 560px) {
+      .shell { width: min(calc(100% - 20px), var(--content)); }
+      .topbar-inner { min-height: 66px; }
+      .brand span:last-child { display: none; }
+      .hero-main,
+      .commercial-card,
+      .section-card,
+      .closing-card { border-radius: 24px; }
+      .hero-main { padding: 28px 24px; }
+      .commercial-card { padding: 28px 24px; min-height: 390px; }
+      .section-card, .closing-card { padding: 28px 22px; }
+      h1 { font-size: 49px; }
+      .hero-note { margin-top: 52px; align-items: flex-start; flex-direction: column; }
+      .price { font-size: 62px; }
+      .lang-switch button { padding: 7px 10px; }
+    }
+
+    @media print {
+      .topbar { position: static; }
+      body { background: white; }
+      .hero-main, .commercial-card, .section-card, .closing-card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+      main { padding-top: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">K</div>
+        <span data-en="KAFY Product Modernization" data-ar="تحديث منتج كافي">KAFY Product Modernization</span>
+      </div>
+
+      <div class="lang-switch" aria-label="Language switcher">
+        <button type="button" class="active" data-lang="en">EN</button>
+        <button type="button" data-lang="ar">العربية</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-main fade">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-en="Project proposal" data-ar="مقترح مشروع">Project proposal</span>
+          </div>
+
+          <h1 data-en="A focused product modernization for KAFY." data-ar="تحديث مركّز لتجربة منتج كافي.">
+            A focused product modernization for KAFY.
+          </h1>
+
+          <p class="hero-copy"
+             data-en="A tightly scoped, remote-first transformation of the existing application into a more professional, consistent and procurement-focused product."
+             data-ar="مشروع محدد النطاق وبنموذج عمل عن بُعد، يهدف إلى تحويل التطبيق الحالي إلى منتج أكثر احترافية واتساقاً وتركيزاً على تجربة المشتريات.">
+            A tightly scoped, remote-first transformation of the existing application into a more professional, consistent and procurement-focused product.
+          </p>
+        </div>
+
+        <div class="hero-note">
+          <div>
+            <strong data-en="Outcome over hours" data-ar="النتيجة أهم من عدد الساعات">Outcome over hours</strong>
+            <span data-en="This engagement is structured as a defined project, not hourly production work."
+                  data-ar="يتم تنفيذ هذا التعاون كمشروع محدد المخرجات، وليس كعمل إنتاجي محسوب بالساعات.">
+              This engagement is structured as a defined project, not hourly production work.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="commercial-card fade">
+        <div>
+          <div class="commercial-label" data-en="Project fee" data-ar="قيمة المشروع">Project fee</div>
+          <div class="price">25,000</div>
+          <div class="currency" data-en="QAR fixed fee" data-ar="ريال قطري، قيمة ثابتة">QAR fixed fee</div>
+        </div>
+
+        <div class="commercial-meta">
+          <div class="meta-row">
+            <span data-en="Delivery" data-ar="التسليم">Delivery</span>
+            <span data-en="By 30 September 2026" data-ar="بحلول 30 سبتمبر 2026">By 30 September 2026</span>
+          </div>
+          <div class="meta-row">
+            <span data-en="Model" data-ar="نموذج العمل">Model</span>
+            <span data-en="Remote-first" data-ar="عن بُعد بشكل أساسي">Remote-first</span>
+          </div>
+          <div class="meta-row">
+            <span data-en="Attendance" data-ar="الحضور">Attendance</span>
+            <span data-en="Workshops and key reviews" data-ar="ورش العمل والمراجعات الأساسية">Workshops and key reviews</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section fade">
+      <div class="section-card">
+        <div class="section-heading">
+          <div class="section-kicker" data-en="Product direction" data-ar="اتجاه المنتج">Product direction</div>
+          <div>
+            <h2 data-en="From marketplace browsing to professional procurement."
+                data-ar="من تجربة تصفح سوق إلى تجربة مشتريات احترافية.">
+              From marketplace browsing to professional procurement.
+            </h2>
+            <p class="lead"
+               data-en="The current experience places strong emphasis on product discovery and cart-building. A procurement buyer usually operates with a different mental model."
+               data-ar="تركّز التجربة الحالية بشكل كبير على اكتشاف المنتجات وإضافتها إلى السلة، بينما يعمل المشتري في بيئة المشتريات وفق نموذج ذهني مختلف.">
+              The current experience places strong emphasis on product discovery and cart-building. A procurement buyer usually operates with a different mental model.
+            </p>
+          </div>
+        </div>
+
+        <div class="insight-grid">
+          <article class="insight">
+            <div class="insight-number">01</div>
+            <h3 data-en="Replenish recurring stock" data-ar="إعادة طلب المخزون المتكرر">Replenish recurring stock</h3>
+            <p data-en="Buyers are often returning for known requirements rather than casually browsing."
+               data-ar="غالباً ما يعود المشترون لتلبية احتياجات معروفة، وليس للتصفح العشوائي.">
+              Buyers are often returning for known requirements rather than casually browsing.
+            </p>
+          </article>
+
+          <article class="insight">
+            <div class="insight-number">02</div>
+            <h3 data-en="Compare known requirements" data-ar="مقارنة الاحتياجات المعروفة">Compare known requirements</h3>
+            <p data-en="Price, availability, supplier reliability and order history matter more than promotional content."
+               data-ar="السعر والتوفر وموثوقية المورد وسجل الطلبات أهم من المحتوى الترويجي.">
+              Price, availability, supplier reliability and order history matter more than promotional content.
+            </p>
+          </article>
+
+          <article class="insight">
+            <div class="insight-number">03</div>
+            <h3 data-en="Repeat and manage efficiently" data-ar="إعادة الطلب والإدارة بكفاءة">Repeat and manage efficiently</h3>
+            <p data-en="The interface should help users act quickly, understand priorities and manage procurement with confidence."
+               data-ar="يجب أن تساعد الواجهة المستخدم على التصرف بسرعة وفهم الأولويات وإدارة المشتريات بثقة.">
+              The interface should help users act quickly, understand priorities and manage procurement with confidence.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade">
+      <div class="section-card">
+        <div class="section-heading">
+          <div class="section-kicker" data-en="Included scope" data-ar="نطاق العمل">Included scope</div>
+          <div>
+            <h2 data-en="A complete visual and design-system transformation."
+                data-ar="تحول متكامل للواجهة ونظام التصميم.">
+              A complete visual and design-system transformation.
+            </h2>
+          </div>
+        </div>
+
+        <div class="scope-grid">
+          <article class="scope-item">
+            <div class="check">✓</div>
+            <div>
+              <h3 data-en="Complete visual redesign" data-ar="إعادة تصميم بصري متكامل">Complete visual redesign</h3>
+              <p data-en="Modernizing the existing mobile application experience."
+                 data-ar="تحديث تجربة التطبيق الحالية بالكامل من الناحية البصرية.">
+                Modernizing the existing mobile application experience.
+              </p>
+            </div>
+          </article>
+
+          <article class="scope-item">
+            <div class="check">✓</div>
+            <div>
+              <h3 data-en="Reusable design system" data-ar="نظام تصميم قابل لإعادة الاستخدام">Reusable design system</h3>
+              <p data-en="A scalable component and pattern foundation for consistent delivery."
+                 data-ar="أساس قابل للتوسع من المكونات والأنماط لضمان الاتساق.">
+                A scalable component and pattern foundation for consistent delivery.
+              </p>
+            </div>
+          </article>
+
+          <article class="scope-item">
+            <div class="check">✓</div>
+            <div>
+              <h3 data-en="Procurement-focused UI language" data-ar="لغة واجهة مخصصة للمشتريات">Procurement-focused UI language</h3>
+              <p data-en="A more professional hierarchy aligned with operational purchasing."
+                 data-ar="تسلسل بصري أكثر احترافية ومتوافق مع عمليات الشراء.">
+                A more professional hierarchy aligned with operational purchasing.
+              </p>
+            </div>
+          </article>
+
+          <article class="scope-item">
+            <div class="check">✓</div>
+            <div>
+              <h3 data-en="Brand refresh" data-ar="تحديث الهوية البصرية">Brand refresh</h3>
+              <p data-en="A refined product-facing expression without unnecessary rebranding complexity."
+                 data-ar="تطوير حضور بصري أكثر نضجاً للمنتج دون تعقيد غير ضروري.">
+                A refined product-facing expression without unnecessary rebranding complexity.
+              </p>
+            </div>
+          </article>
+
+          <article class="scope-item">
+            <div class="check">✓</div>
+            <div>
+              <h3 data-en="Existing screens and confirmed flows" data-ar="الشاشات الحالية والتدفقات المؤكدة">Existing screens and confirmed flows</h3>
+              <p data-en="Redesigning the current product based on agreed functionality."
+                 data-ar="إعادة تصميم المنتج الحالي وفق الوظائف والتدفقات المتفق عليها.">
+                Redesigning the current product based on agreed functionality.
+              </p>
+            </div>
+          </article>
+
+          <article class="scope-item">
+            <div class="check">✓</div>
+            <div>
+              <h3 data-en="Production-ready Figma and handoff" data-ar="ملفات فيغما جاهزة للتطوير والتسليم">Production-ready Figma and handoff</h3>
+              <p data-en="Organized design files, specifications and focused design QA support."
+                 data-ar="ملفات منظمة ومواصفات واضحة ودعم مركّز لضمان جودة التنفيذ.">
+                Organized design files, specifications and focused design QA support.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade">
+      <div class="section-card boundary">
+        <div class="section-heading">
+          <div class="section-kicker" data-en="Scope boundary" data-ar="حدود النطاق">Scope boundary</div>
+          <div>
+            <h2 data-en="Clear boundaries protect delivery quality and speed."
+                data-ar="وضوح الحدود يحمي جودة وسرعة التسليم.">
+              Clear boundaries protect delivery quality and speed.
+            </h2>
+          </div>
+        </div>
+
+        <div class="boundary-box"
+             data-en="This first phase modernizes and standardizes the existing application using its current functionality and confirmed flows. New features, major workflow restructuring, business-rule changes, permissions or additional product modules will be assessed and scoped separately."
+             data-ar="تركّز هذه المرحلة الأولى على تحديث وتوحيد التطبيق الحالي وفق وظائفه وتدفقاته المؤكدة. أما الميزات الجديدة أو التغييرات الجوهرية في التدفقات أو قواعد العمل أو الصلاحيات أو الوحدات الإضافية، فسيتم تقييمها وتحديد نطاقها بشكل منفصل.">
+          This first phase modernizes and standardizes the existing application using its current functionality and confirmed flows. New features, major workflow restructuring, business-rule changes, permissions or additional product modules will be assessed and scoped separately.
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade">
+      <div class="closing-card">
+        <div>
+          <div class="section-kicker" data-en="Next step" data-ar="الخطوة التالية">Next step</div>
+          <h2 data-en="Confirm the scope, then move directly into delivery."
+              data-ar="تأكيد النطاق، ثم الانتقال مباشرة إلى التنفيذ.">
+            Confirm the scope, then move directly into delivery.
+          </h2>
+          <p data-en="Once the scope and commercial terms are agreed, the screen inventory, milestones and review cadence can be confirmed."
+             data-ar="بعد الاتفاق على النطاق والشروط التجارية، يتم اعتماد قائمة الشاشات ومراحل التسليم وجدول المراجعات.">
+            Once the scope and commercial terms are agreed, the screen inventory, milestones and review cadence can be confirmed.
+          </p>
+        </div>
+
+        <div class="signature">
+          <strong data-en="Prepared by Joseph" data-ar="إعداد جوزيف">Prepared by Joseph</strong>
+          <span data-en="Senior Product Designer" data-ar="مصمم منتجات أول">Senior Product Designer</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <span data-en="Confidential commercial proposal · 2026"
+          data-ar="مقترح تجاري سري · 2026">
+      Confidential commercial proposal · 2026
+    </span>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('[data-lang]');
+    const translatable = document.querySelectorAll('[data-en][data-ar]');
+
+    function setLanguage(lang) {
+      const isArabic = lang === 'ar';
+      document.documentElement.lang = lang;
+      document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+      document.title = isArabic
+        ? 'مقترح تحديث منتج كافي'
+        : 'KAFY Product Modernization Proposal';
+
+      translatable.forEach((element) => {
+        element.textContent = element.dataset[lang];
+      });
+
+      buttons.forEach((button) => {
+        button.classList.toggle('active', button.dataset.lang === lang);
+        button.setAttribute('aria-pressed', button.dataset.lang === lang ? 'true' : 'false');
+      });
+
+      localStorage.setItem('kafy-proposal-language', lang);
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => setLanguage(button.dataset.lang));
+    });
+
+    const savedLanguage = localStorage.getItem('kafy-proposal-language');
+    const preferredLanguage = savedLanguage || (navigator.language.startsWith('ar') ? 'ar' : 'en');
+    setLanguage(preferredLanguage);
+  </script>
+</body>
+</html>
